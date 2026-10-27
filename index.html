@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Mykonos Digital Twin</title>
+<style>
+  :root {
+    --panel: rgba(20, 24, 28, 0.78); --line: rgba(255, 255, 255, 0.12); --ink: #f3f1ec; --muted: #a9b0b6;
+    --accent: #ff7a2e; --radius: 12px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #0e1114; color: var(--ink);
+    font: 13px/1.35 Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  #stage { position: fixed; inset: 0; }
+  #stage canvas { display: block; }
+  .panel { position: fixed; background: var(--panel); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--line); border-radius: var(--radius); }
+  #brand { top: 14px; left: 14px; padding: 10px 14px; }
+  #brand b { font-size: 15px; letter-spacing: .2px; }
+  #brand small { display: block; color: var(--muted); margin-top: 2px; }
+  #left { top: 78px; left: 14px; width: 232px; padding: 8px; display: flex; flex-direction: column; gap: 4px; max-height: calc(100vh - 340px); overflow: auto; }
+  #left h4, #right h4 { margin: 6px 6px 4px; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; }
+  #hotspots { display: flex; flex-direction: column; gap: 2px; }
+  button { font: inherit; color: var(--ink); background: transparent; border: 0; border-radius: 8px; padding: 6px 8px; text-align: left; cursor: pointer; }
+  button:hover { background: rgba(255,255,255,.08); }
+  button.on { background: var(--accent); color: #111; font-weight: 600; }
+  kbd { display: inline-block; min-width: 18px; padding: 0 4px; margin-right: 8px; border-radius: 4px; background: rgba(255,255,255,.12);
+    font: 11px/18px ui-monospace, monospace; text-align: center; color: var(--ink); }
+  button.on kbd { background: rgba(0,0,0,.15); color: #111; }
+  #modes { display: flex; gap: 4px; padding: 4px; }
+  #modes button { flex: 1; text-align: center; border: 1px solid var(--line); }
+  #minimap { bottom: 14px; left: 14px; width: 260px; height: 200px; padding: 0; overflow: hidden; cursor: crosshair; }
+  #right { top: 14px; right: 14px; width: 300px; max-height: calc(100vh - 28px); overflow: auto; padding: 8px 10px 12px; }
+  .tabs { display: flex; gap: 4px; margin-bottom: 6px; }
+  .tabs button { flex: 1; text-align: center; border: 1px solid var(--line); }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 5px 6px; border-radius: 8px; }
+  .row:hover { background: rgba(255,255,255,.05); }
+  .row span { color: var(--ink); }
+  select { font: inherit; color: var(--ink); background: rgba(255,255,255,.08); border: 1px solid var(--line); border-radius: 6px; padding: 3px 6px; max-width: 150px; }
+  select option { color: #111; }
+  input[type=checkbox] { accent-color: var(--accent); width: 16px; height: 16px; }
+  input[type=range] { width: 100%; accent-color: var(--accent); }
+  .time { padding: 4px 6px 8px; }
+  .time div { display: flex; justify-content: space-between; color: var(--muted); }
+  .time b { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .actions { display: flex; gap: 6px; padding: 8px 6px 0; flex-wrap: wrap; }
+  .actions button, .actions label.btn { border: 1px solid var(--line); text-align: center; flex: 1; padding: 6px; border-radius: 8px; cursor: pointer; }
+  .note { color: var(--muted); font-size: 12px; padding: 4px 6px; }
+  #help { bottom: 14px; left: 50%; transform: translateX(-50%); padding: 8px 14px; color: var(--muted); white-space: nowrap; }
+  button.primary { background: var(--accent); color: #111; font-weight: 600; }
+  #photo { top: 14px; left: 50%; transform: translateX(-50%); width: 340px; padding: 10px 12px; }
+  .photo-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .photo-row button { border: 1px solid var(--line); flex: 1; text-align: center; }
+  #photoStatus { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .bar { height: 4px; background: rgba(255,255,255,.12); border-radius: 2px; margin: 8px 0; overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .2s; }
+  body.photo #left, body.photo #right, body.photo #minimap, body.photo #tour, body.photo #help, body.photo #brand, body.photo #pick { display: none !important; }
+  #diag { left: 16px; bottom: 16px; z-index: 60; max-width: min(560px, calc(100vw - 32px)); padding: 10px 12px; border: 1px solid #d9534f; font: 12px/1.45 ui-monospace, Menlo, monospace; white-space: pre-wrap; user-select: text; }
+  #toast { bottom: 110px; left: 50%; transform: translateX(-50%); padding: 8px 14px; }
+  #tour { bottom: 58px; left: 50%; transform: translateX(-50%); width: min(560px, calc(100vw - 600px)); min-width: 380px; padding: 12px 14px 10px; }
+  .tour-head { display: flex; gap: 10px; align-items: baseline; }
+  .tour-head span { color: var(--accent); font: 600 12px/1 ui-monospace, monospace; }
+  .tour-head b { font-size: 15px; }
+  #tour p { margin: 6px 0 10px; color: #d9dcdf; font-size: 13px; line-height: 1.45; }
+  .tour-actions { display: flex; gap: 6px; align-items: center; }
+  .tour-actions button { border: 1px solid var(--line); text-align: center; min-width: 38px; }
+  #tourPlay { flex: 0 0 auto; padding: 6px 14px; }
+  #tourDots { display: flex; gap: 5px; margin-left: auto; }
+  #tourDots i { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.25); cursor: pointer; }
+  #tourDots i.on { background: var(--accent); }
+  #help b { color: var(--ink); font-weight: 600; }
+  #pick { top: 50%; left: 50%; transform: translate(-50%, 26px); padding: 6px 10px; font-size: 12px; pointer-events: none; }
+  #crosshair { position: fixed; top: 50%; left: 50%; width: 6px; height: 6px; margin: -3px; border-radius: 50%; background: #fff;
+    box-shadow: 0 0 0 1.5px rgba(0,0,0,.45); pointer-events: none; display: none; }
+  body.locked #crosshair { display: block; }
+  body[data-mode=orbit] #pick, body[data-mode=orbit] #crosshair, body:not(.locked):not(.draglook) #pick { display: none; }
+  #credits { position: fixed; bottom: 4px; right: 150px; color: rgba(255,255,255,.5); font-size: 10px; pointer-events: auto; }
+  #credits a { color: inherit; }
+  body.hideui #credits, body.photo #credits { display: none; }
+  #fps { position: fixed; bottom: 4px; right: 10px; color: rgba(255,255,255,.45); font: 11px ui-monospace, monospace; pointer-events: none; }
+  #loading { position: fixed; inset: 0; display: grid; place-items: center; background: #0e1114; color: var(--muted); z-index: 9; font-size: 14px; }
+  body.hideui .panel, body.hideui #fps { display: none !important; }
+  /* view bar: full screen + hide menus; stays reachable (faded) when the menus are hidden */
+  #viewbar { position: fixed; top: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 30; transition: opacity .25s; }
+  #viewbar button { background: var(--panel); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--line);
+    border-radius: 10px; color: var(--ink); padding: 7px 12px; font: inherit; cursor: pointer; white-space: nowrap; }
+  #viewbar button:hover { border-color: rgba(255,255,255,.35); }
+  body.hideui #viewbar { opacity: .28; top: 14px; }
+  body.hideui #viewbar:hover { opacity: 1; }
+  body.hideui #viewbar #fsBtn { display: none; }
+  body.photo #viewbar { display: none; }
+  #tourText { white-space: pre-line; }
+  .prof-row { display: flex; gap: 6px; margin: 4px 6px 6px; } .prof-row input { flex: 1; min-width: 0; background: rgba(255,255,255,.08); border: 1px solid var(--line); border-radius: 8px; color: var(--ink); padding: 6px 8px; font: inherit; }
+  #profList .prof { display: flex; align-items: center; gap: 4px; margin: 3px 6px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; }
+  #profList .prof span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } #profList .prof small { color: var(--muted); display: block; font-size: 10px; }
+  #profList .prof button, #glassList button { padding: 3px 8px; font-size: 11px; }
+  #glassList .gl { display: flex; align-items: center; gap: 6px; margin: 3px 6px; } #glassList .gl span { flex: 1; }
+  #elPop { position: fixed; z-index: 40; padding: 8px 10px; display: flex; flex-direction: column; gap: 6px; min-width: 200px; }
+  #elPop span { color: var(--muted); font-size: 11px; } #elPop[hidden], body.hideui #elPop { display: none !important; }
+  #themeSeg { display: flex; background: var(--panel); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--line); border-radius: 10px; padding: 3px; gap: 2px; }
+  #themeSeg button { border: 0 !important; background: transparent !important; padding: 4px 12px !important; border-radius: 7px !important; backdrop-filter: none !important; color: var(--muted) !important; }
+  #themeSeg button.on { background: var(--accent) !important; color: #111 !important; font-weight: 600; }
+  body.hideui #viewbar #themeSeg { display: none; }
+  @media (max-width: 760px) {
+    #left { top: auto; bottom: 14px; left: 14px; right: 14px; width: auto; max-height: 120px; flex-direction: row; overflow-x: auto; }
+    #left h4, #modes { display: none; }
+    #hotspots { flex-direction: row; }
+    #hotspots button { white-space: nowrap; }
+    #hotspots kbd { display: none; }
+    #minimap, #help { display: none; }
+    #tour { width: auto; min-width: 0; left: 14px; right: 14px; transform: none; bottom: 150px; }
+    #tourDots { display: none; }
+    #right { width: auto; left: 14px; top: auto; bottom: 150px; max-height: 40vh; }
+    #brand { right: 14px; }
+    #viewbar { top: 76px; left: auto; right: 14px; transform: none; }
+  }
+</style>
+<script type="importmap">
+{ "imports": {
+    "three": "./node_modules/three/build/three.module.js",
+    "three/addons/": "./node_modules/three/examples/jsm/",
+    "three/examples/jsm/": "./node_modules/three/examples/jsm/",
+    "three-mesh-bvh": "./node_modules/three-mesh-bvh/build/index.module.js",
+    "three-gpu-pathtracer": "./node_modules/three-gpu-pathtracer/build/index.module.js"
+} }
+</script>
+</head>
+<body data-mode="walk">
+<div id="stage"></div>
+<div id="loading">Building Mykonos from the CAD drawings…</div>
+<div id="crosshair"></div>
+
+<div id="brand" class="panel"><b>Mykonos · Le Méridien Abu Dhabi</b><small>Digital twin · base build from site CAD (true scale)</small></div>
+<div id="viewbar"><div id="themeSeg" title="Interior theme"></div><button id="fsBtn" title="Fill the whole screen (Esc to leave)">⛶ Full screen</button><button id="uiBtn" title="Hide every panel for a clean view (H)">◱ Hide menus</button></div>
+
+<div id="left" class="panel">
+  <div id="modes"><button id="modeWalk" class="on">Walk</button><button id="modeOrbit">Overview <kbd style="margin:0 0 0 6px">O</kbd></button></div>
+  <h4>Go to</h4>
+  <div id="hotspots"></div>
+</div>
+
+<canvas id="minimap" class="panel" title="Click to jump there"></canvas>
+
+<div id="right" class="panel">
+  <div class="tabs"><button data-tab="view" class="on">View</button><button data-tab="design">Finishes</button><button data-tab="profiles">Profiles</button></div>
+  <section id="view" class="tab">
+    <h4>Time of day · 23 Oct</h4>
+    <div class="time"><input id="time" type="range" min="5.5" max="21.5" step="0.05"><div><span>05:30</span><b id="timeLabel"></b><span>21:30</span></div></div>
+    <h4>Render</h4>
+    <label class="row"><span>Sky</span><select id="skySel"></select></label>
+    <label class="row" id="cloudRow"><span>Clouds</span><select id="cloudSel"></select></label>
+    <label class="row"><span>Realtime quality</span><select id="quality"><option value="cinematic">Cinematic (AO + bloom)</option><option value="standard">Standard (fast)</option></select></label>
+    <p class="note" id="gpuNote" hidden></p>
+    <label class="row" title="Filmic keeps a natural sky; True colour shows finishes as specified (Khronos PBR Neutral) — use it to judge colours against the renders"><span>Colour</span><select id="colourSel"><option value="filmic">Filmic (natural sky)</option><option value="true">True colour (finishes)</option></select></label>
+    <div class="actions" style="padding-top:2px">
+      <button id="photoBtn" class="primary" title="Path-trace a photoreal still of this view (C)">📷 Photo mode</button>
+      <button id="exportBtn" title="Download the visible model as .glb for Unreal / Twinmotion / Blender">⬇ Export 3D (.glb)</button>
+    </div>
+    <h4>People &amp; nightlife</h4>
+    <label class="row"><span>People</span><select id="peopleSel"></select></label>
+    <label class="row"><span>Crowd</span><select id="crowdSel"></select></label>
+    <label class="row" title="Moving heads, gobos, mirror ball, LED rings and lasers on the first-floor dance floor (Bali / Riviera)"><span>Club lights (first floor)</span><select id="clubSel"></select></label>
+    <p class="note" id="peopleNote">Seated on the plan's own chairs, standing at the bars, walking the route; the DJ, the dancers and the band arrive in the evening; the club lights start after sunset.</p>
+    <h4>Show</h4>
+    <label class="row"><span>Guided walk path</span><input id="t_route" type="checkbox" checked></label>
+    <label class="row"><span>Furniture &amp; lamps</span><input id="t_furniture" type="checkbox" checked></label>
+    <label class="row"><span>Ceilings &amp; roofs</span><input id="t_ceilings" type="checkbox" checked></label>
+    <label class="row"><span>Upper floor &amp; stair hall</span><input id="t_upper" type="checkbox" checked></label>
+    <label class="row"><span>Folding doors closed</span><input id="t_doors" type="checkbox"></label>
+    <label class="row"><span>Hotel, pool &amp; skyline</span><input id="t_context" type="checkbox" checked></label>
+    <label class="row"><span>Zone labels (overview)</span><input id="t_labels" type="checkbox" checked></label>
+    <label class="row"><span>Cut away roofs in overview</span><input id="t_cutaway" type="checkbox" checked></label>
+    <label class="row"><span>High-res shadows</span><input id="t_shadows" type="checkbox" checked></label>
+    <p class="note">Heights and the stair position are evidence-based assumptions (see README); furniture is placeholder until the FF&amp;E schedule arrives.</p>
+  </section>
+  <section id="design" class="tab" hidden></section>
+  <section id="profiles" class="tab" hidden>
+    <h4>Current look</h4>
+    <p class="note" id="profNow"></p>
+    <div class="prof-row"><input id="profName" type="text" placeholder="Name this look, e.g. Bali – sunset" maxlength="60"><button id="profSave" class="primary">Save</button></div>
+    <label class="row"><span>Include the camera view</span><input id="profCam" type="checkbox" checked></label>
+    <div class="actions"><button id="profDisk" title="Save the current look as a .json file">⬇ Save to disk</button><button id="profOpen" title="Open a saved .json profile">Open file…</button><button id="profLink" title="Copy a link that opens this exact look">🔗 Copy link</button></div>
+    <h4>Saved in this browser</h4>
+    <div id="profList"></div>
+    <p class="note">Profiles stay in this browser (local storage) and work the same once the twin is hosted (e.g. GitHub Pages). Use <b>Save to disk</b> or <b>Copy link</b> to move a look to another browser or device; the link carries the whole profile, nothing is sent to a server. The current look is also autosaved and restored on your next visit.</p>
+  </section>
+  <section class="tab-foot">
+    <div class="actions" id="schemeActions">
+      <button id="toProfiles" title="Save or load the whole look (theme, finishes, glass, view)">Save / load look…</button>
+      <button id="resetScheme" title="Back to this theme's own finishes">Reset finishes</button>
+    </div>
+  </section>
+</div>
+
+<div id="pick" class="panel" hidden></div>
+<div id="elPop" class="panel" hidden><b id="elPopName"></b><span id="elPopInfo"></span><div class="actions"><button id="elPopGlass" class="primary"></button><button id="elPopClose">✕</button></div></div>
+<div id="photo" class="panel" hidden>
+  <div class="photo-row"><b>Photo mode</b><span id="photoStatus">Preparing…</span></div>
+  <div class="bar"><i id="photoBar"></i></div>
+  <div class="photo-row"><button id="photoSave">Save image</button><button id="photoExit">Exit (Esc)</button></div>
+</div>
+<div id="toast" class="panel" hidden></div>
+<div id="diag" class="panel" hidden></div>
+<div id="tour" class="panel">
+  <div class="tour-head"><span id="tourStep"></span><b id="tourTitle"></b></div>
+  <p id="tourText"></p>
+  <div class="tour-actions">
+    <button id="tourPrev" title="Previous stop (B)">◀</button>
+    <button id="tourPlay" class="on" title="Play / pause (G)"></button>
+    <button id="tourNext" title="Next stop (N)">▶</button>
+    <div id="tourDots"></div>
+  </div>
+</div>
+<div id="help" class="panel"><b>G</b> guided walk · <b>Click</b> to look · <b>WASD</b> walk · <b>Shift</b> run · <b>O</b> overview · <b>F</b> swap finish · <b>X</b> wall ⇄ glass · <b>C</b> photo mode · <b>P</b> screenshot · <b>H</b> hide menus</div>
+<div id="fps"></div>
+<div id="credits">Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors · textures, skies &amp; models: Poly Haven, ambientCG (CC0)</div>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>

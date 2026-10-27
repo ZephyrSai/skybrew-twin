@@ -1,0 +1,451 @@
+{
+ "textures": [
+  {
+   "id": "terrazzo_tiles",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/terrazzo_tiles",
+   "tile_m": 2,
+   "maps": [
+    "color",
+    "normal",
+    "orm"
+   ]
+  },
+  {
+   "id": "white_plaster_02",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/white_plaster_02",
+   "tile_m": 1,
+   "maps": [
+    "color",
+    "normal",
+    "orm",
+    "color_neutral"
+   ]
+  },
+  {
+   "id": "painted_plaster_wall",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/painted_plaster_wall",
+   "tile_m": 2,
+   "maps": [
+    "color",
+    "normal",
+    "orm",
+    "color_neutral"
+   ]
+  },
+  {
+   "id": "stone_tiles_02",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/stone_tiles_02",
+   "tile_m": 2,
+   "maps": [
+    "color",
+    "normal",
+    "orm"
+   ]
+  },
+  {
+   "id": "brown_planks_03",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/brown_planks_03",
+   "tile_m": 1,
+   "maps": [
+    "color",
+    "normal",
+    "orm",
+    "color_neutral"
+   ]
+  },
+  {
+   "id": "reed_roof_04",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/reed_roof_04",
+   "tile_m": 2.5,
+   "maps": [
+    "color",
+    "normal",
+    "orm"
+   ]
+  },
+  {
+   "id": "rough_linen",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/rough_linen",
+   "tile_m": 0.27,
+   "maps": [
+    "color",
+    "normal",
+    "orm",
+    "color_neutral"
+   ]
+  },
+  {
+   "id": "castle_wall_slates",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/castle_wall_slates",
+   "tile_m": 2.5,
+   "maps": [
+    "color",
+    "normal",
+    "orm",
+    "color_neutral"
+   ]
+  },
+  {
+   "id": "concrete_floor_02",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/concrete_floor_02",
+   "tile_m": 2,
+   "maps": [
+    "color",
+    "normal",
+    "orm"
+   ]
+  },
+  {
+   "id": "marble_01",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/marble_01",
+   "tile_m": 1.5,
+   "maps": [
+    "color",
+    "normal",
+    "orm",
+    "color_neutral"
+   ]
+  },
+  {
+   "id": "sand_01",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/sand_01",
+   "tile_m": 1.5,
+   "maps": [
+    "color",
+    "normal",
+    "orm"
+   ]
+  },
+  {
+   "id": "leafy_grass",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/leafy_grass",
+   "tile_m": 2,
+   "maps": [
+    "color",
+    "normal",
+    "orm"
+   ]
+  },
+  {
+   "id": "ganges_river_pebbles",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/ganges_river_pebbles",
+   "tile_m": 2.16,
+   "maps": [
+    "color",
+    "normal",
+    "orm"
+   ]
+  },
+  {
+   "id": "palm_tree_bark",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/palm_tree_bark",
+   "tile_m": 1.3,
+   "maps": [
+    "color",
+    "normal",
+    "orm"
+   ]
+  },
+  {
+   "id": "Terrazzo018",
+   "source": "ambientCG",
+   "licence": "CC0",
+   "page": "https://ambientcg.com/view?id=Terrazzo018",
+   "tile_m": 1,
+   "maps": [
+    "color",
+    "normal",
+    "orm"
+   ]
+  },
+  {
+   "id": "Travertine009",
+   "source": "ambientCG",
+   "licence": "CC0",
+   "page": "https://ambientcg.com/view?id=Travertine009",
+   "tile_m": 1.2,
+   "maps": [
+    "color",
+    "normal",
+    "orm"
+   ]
+  },
+  {
+   "id": "PaintedPlaster017",
+   "source": "ambientCG",
+   "licence": "CC0",
+   "page": "https://ambientcg.com/view?id=PaintedPlaster017",
+   "tile_m": 1,
+   "maps": [
+    "color",
+    "normal",
+    "orm",
+    "color_neutral"
+   ]
+  },
+  {
+   "id": "Bamboo001A",
+   "source": "ambientCG",
+   "licence": "CC0",
+   "page": "https://ambientcg.com/view?id=Bamboo001A",
+   "tile_m": 1.3,
+   "maps": [
+    "color",
+    "normal",
+    "orm",
+    "alpha"
+   ]
+  },
+  {
+   "id": "Wicker013",
+   "source": "ambientCG",
+   "licence": "CC0",
+   "page": "https://ambientcg.com/view?id=Wicker013",
+   "tile_m": 0.5,
+   "maps": [
+    "color",
+    "normal",
+    "orm"
+   ]
+  },
+  {
+   "id": "Wicker010A",
+   "source": "ambientCG",
+   "licence": "CC0",
+   "page": "https://ambientcg.com/view?id=Wicker010A",
+   "tile_m": 1,
+   "maps": [
+    "color",
+    "normal",
+    "orm",
+    "alpha"
+   ]
+  },
+  {
+   "id": "Rope001",
+   "source": "ambientCG",
+   "licence": "CC0",
+   "page": "https://ambientcg.com/view?id=Rope001",
+   "tile_m": 1,
+   "maps": [
+    "color",
+    "normal",
+    "orm"
+   ]
+  }
+ ],
+ "models": [
+  {
+   "id": "outdoor_table_chair_set_01",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/outdoor_table_chair_set_01",
+   "file": "models/outdoor_table_chair_set_01.glb",
+   "bytes": 417576
+  },
+  {
+   "id": "dining_chair_02",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/dining_chair_02",
+   "file": "models/dining_chair_02.glb",
+   "bytes": 291320
+  },
+  {
+   "id": "mid_century_lounge_chair",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/mid_century_lounge_chair",
+   "file": "models/mid_century_lounge_chair.glb",
+   "bytes": 294972
+  },
+  {
+   "id": "modern_arm_chair_01",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/modern_arm_chair_01",
+   "file": "models/modern_arm_chair_01.glb",
+   "bytes": 326416
+  },
+  {
+   "id": "sofa_03",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/sofa_03",
+   "file": "models/sofa_03.glb",
+   "bytes": 298112
+  },
+  {
+   "id": "Ottoman_01",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/Ottoman_01",
+   "file": "models/Ottoman_01.glb",
+   "bytes": 319880
+  },
+  {
+   "id": "bar_chair_round_01",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/bar_chair_round_01",
+   "file": "models/bar_chair_round_01.glb",
+   "bytes": 546312
+  },
+  {
+   "id": "round_wooden_table_01",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/round_wooden_table_01",
+   "file": "models/round_wooden_table_01.glb",
+   "bytes": 184300
+  },
+  {
+   "id": "coffee_table_round_01",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/coffee_table_round_01",
+   "file": "models/coffee_table_round_01.glb",
+   "bytes": 193884
+  },
+  {
+   "id": "side_table_01",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/side_table_01",
+   "file": "models/side_table_01.glb",
+   "bytes": 189756
+  },
+  {
+   "id": "wooden_lantern_01",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/wooden_lantern_01",
+   "file": "models/wooden_lantern_01.glb",
+   "bytes": 486604
+  },
+  {
+   "id": "lantern_chandelier_01",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/lantern_chandelier_01",
+   "file": "models/lantern_chandelier_01.glb",
+   "bytes": 801264
+  },
+  {
+   "id": "wicker_basket_01",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/wicker_basket_01",
+   "file": "models/wicker_basket_01.glb",
+   "bytes": 477060
+  },
+  {
+   "id": "ceramic_vase_01",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/ceramic_vase_01",
+   "file": "models/ceramic_vase_01.glb",
+   "bytes": 104256
+  },
+  {
+   "id": "potted_plant_02",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/potted_plant_02",
+   "file": "models/potted_plant_02.glb",
+   "bytes": 893264
+  },
+  {
+   "id": "potted_plant_04",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/potted_plant_04",
+   "file": "models/potted_plant_04.glb",
+   "bytes": 406916
+  },
+  {
+   "id": "planter_box_01",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/planter_box_01",
+   "file": "models/planter_box_01.glb",
+   "bytes": 357656
+  },
+  {
+   "id": "pachira_aquatica_01",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/pachira_aquatica_01",
+   "file": "models/pachira_aquatica_01.glb",
+   "bytes": 979860
+  },
+  {
+   "id": "shrub_04",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/shrub_04",
+   "file": "models/shrub_04.glb",
+   "bytes": 345384
+  }
+ ],
+ "hdri": [
+  {
+   "id": "belfast_sunset_puresky",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/belfast_sunset_puresky",
+   "files": {
+    "2k": "hdri/belfast_sunset_puresky_2k.hdr",
+    "4k": "hdri/belfast_sunset_puresky_4k.hdr"
+   }
+  },
+  {
+   "id": "kloppenheim_06_puresky",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/kloppenheim_06_puresky",
+   "files": {
+    "2k": "hdri/kloppenheim_06_puresky_2k.hdr",
+    "4k": "hdri/kloppenheim_06_puresky_4k.hdr"
+   }
+  },
+  {
+   "id": "satara_night_no_lamps",
+   "source": "Poly Haven",
+   "licence": "CC0",
+   "page": "https://polyhaven.com/a/satara_night_no_lamps",
+   "files": {
+    "2k": "hdri/satara_night_no_lamps_2k.hdr",
+    "4k": "hdri/satara_night_no_lamps_4k.hdr"
+   }
+  }
+ ]
+}

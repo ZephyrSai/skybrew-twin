@@ -114,9 +114,10 @@ export function buildUpper(V, add, colliders) {
     const f0 = Math.max(doorS[0] - 1.05, tSW + 0.02), f1 = Math.min(doorS[1] + 1.05, tE + wt);
     const fa = PD(f0, q - 0.02), fb = PD(f1, q - 0.02);
     add('upper', 'facade', G.panel(fa, fb, 0, 3.9, 0.36, [{ u0: doorS[0] - 0.55 - f0, u1: doorS[1] + 0.55 - f0, v0: 0, v1: 3.55, arch: 'round' }], -0.18));
-    // stone cladding on the left jamb of the recess, door leaf (open), small arched windows, black stone steps
+    // stone cladding on the left jamb of the recess, door leaf (open), small arched windows, black stone steps. The
+    // leaf is hung on the right and stands open against the lobby's east side, clear of the stair on your left
     add('upper', 'landing_walls', G.panel(PD(doorS[0] - 0.55, q - 0.04), PD(doorS[0] - 0.1, q - 0.04), 0, 2.9, 0.06));
-    const hinge = PD(doorS[0], -hw);
+    const hinge = PD(doorS[1] - 0.04, -hw);
     add('upper', 'fixed:door_timber', G.beam(hinge, [hinge[0] + nD[0] * 0.95, hinge[1] + nD[1] * 0.95], 0.06, lobbyH, lobbyH + 2.45));
     for (const ds of [-0.32, dw + 0.32]) {
       const c0 = doorS[0] + ds;

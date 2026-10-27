@@ -620,7 +620,9 @@ async function applyProfile(p, { camera = true } = {}) {
     if (q) { $('#quality').value = q; userQuality = q; post.enabled = q === 'cinematic'; }
     if (v.colour && v.colour !== colourMode) setColourMode(v.colour);
     if (v.crowd) { crowd.setLevel(v.crowd); $('#crowdSel').value = v.crowd; }
-    if (v.people) { crowd.setMode(v.people); $('#peopleSel').value = v.people; $('#crowdSel').disabled = v.people === 'off'; }
+    // the crowd is on by default (client notes 27 Oct): a look saved before v5 with people off starts with them animated
+    const ppl = v.people === 'off' && (p.v || 1) < 5 ? 'animated' : v.people;
+    if (ppl) { crowd.setMode(ppl); $('#peopleSel').value = ppl; $('#crowdSel').disabled = ppl === 'off'; }
     if (v.club) { club.setMode(v.club); $('#clubSel').value = v.club; }
     if (v.clouds) { clouds.setPreset(v.clouds); $('#cloudSel').value = v.clouds; }
     if (typeof v.doorsClosed === 'boolean' && $('#t_doors').checked !== v.doorsClosed) { $('#t_doors').checked = v.doorsClosed; $('#t_doors').dispatchEvent(new Event('change')); }

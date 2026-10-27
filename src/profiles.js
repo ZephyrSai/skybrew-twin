@@ -5,7 +5,7 @@
 //   * disk: download / save-as a .json file (File System Access API where available) and open it again;
 //   * link: the profile compressed into the URL fragment (#p=…), so it travels with the link and never hits a server.
 const LIST = 'skybrew.profiles.v1', CUR = 'skybrew.profile.autosave.v1';
-export const PROFILE_VERSION = 4;   // 2: Bali floor default changed · 3: Riviera pods floor = hall terrazzo (themes.migrateSchemes) · 4: quality kept is the one you chose (main.js)
+export const PROFILE_VERSION = 5;   // 2: Bali floor default changed · 3: Riviera pods floor = hall terrazzo (themes.migrateSchemes) · 4: quality kept is the one you chose · 5: crowd on by default (main.js)
 
 const store = {
   get(k) { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch { return null; } },

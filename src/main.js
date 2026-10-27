@@ -24,6 +24,7 @@ const $ = (s) => document.querySelector(s);
 // ?safe: start without this browser's saved look, with people and club lights off and the fast pipeline
 const QS = new URLSearchParams(location.search);
 const SAFE = QS.has('safe');
+const DEFAULT_THEME = 'riviera';                         // the look a first visit opens in (client notes 27 Oct)
 // GPU budget. At full budget the twin asks the GPU for ~1.1 GB (textures ~0.5, MSAA HDR targets, 4K shadows). Safari
 // gets the full look with textures capped at 2K (~0.8 GB). "Lite" — only in a browser that has lost the WebGL context
 // here — caps the canvas at ~2 Mpx, drops MSAA on the HDR target, halves the shadow map and textures (~0.35 GB).
@@ -316,7 +317,7 @@ function sunAt(date, hours) {
 let restoring = false, saveTimer = 0;                   // profile autosave (see saveSoon)
 let pickables = [], hoveredEl = null;                   // crosshair picking (surfaces + wall elements)
 let themes = null;                                      // assigned once the venue + brand are loaded (see setTheme)
-let timeOfDay = 17.5;                                   // evening by default (sunset ≈ 17:47 on 23 Oct)
+let timeOfDay = 20;                                     // 20:00 by default (client notes 27 Oct; sunset ≈ 17:47 on 23 Oct)
 function applyTime(h, keepSky = false) {
   timeOfDay = h; shadowDirty = true;
   if (!keepSky && skyMode !== 'procedural') { setSky('procedural'); return; }
@@ -780,8 +781,10 @@ upgradeWithModels().catch((e) => console.error('model upgrade failed', e)).final
   try { p = await Profiles.fromHash(); } catch (e) { toast(`That link's look could not be read: ${e.message}`); }
   if (p) { await applyProfile(p); toast(`Opened the shared look “${p.name}”.`); return; }
   const auto = SAFE ? null : Profiles.loadAutosave();
+  // defaults (client notes 27 Oct): Riviera at 20:00 — an autosave from before v6 starts there once
+  if (auto && (auto.v || 1) < 6) { auto.theme = DEFAULT_THEME; auto.view = { ...auto.view, time: timeOfDay }; }
   if (auto) { if (want && THEME_LIST.some((t) => t.id === want)) auto.theme = want; await applyProfile(auto, { camera: false }); return; }
-  if (themes) setTheme(want && THEME_LIST.some((t) => t.id === want) ? want : 'free', true);
+  if (themes) setTheme(want && THEME_LIST.some((t) => t.id === want) ? want : DEFAULT_THEME, true);
 })();
 if (photoFinishes) console.info(`photo finishes registered: ${photoFinishes}`);
 if (venue.city) console.info('city', venue.city.stats);

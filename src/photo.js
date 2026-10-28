@@ -102,7 +102,7 @@ export class PhotoMode extends EventTarget {
 
   save() {
     const a = document.createElement('a'); a.href = this.renderer.domElement.toDataURL('image/png');
-    a.download = `mykonos-photo-${new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-')}.png`; a.click();
+    a.download = `skybrew-photo-${new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-')}.png`; a.click();
   }
 
   exit() {

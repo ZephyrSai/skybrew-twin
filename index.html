@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Mykonos Digital Twin</title>
+<title>Skybrew Digital Twin</title>
 <style>
   :root {
     --panel: rgba(20, 24, 28, 0.78); --line: rgba(255, 255, 255, 0.12); --ink: #f3f1ec; --muted: #a9b0b6;
@@ -14,9 +14,11 @@
     font: 13px/1.35 Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
   #stage { position: fixed; inset: 0; }
   #stage canvas { display: block; }
-  /* ZephyrSai watermark: centred over the 3D view, translucent, never in the way of clicks (UI panels paint over it) */
-  #watermark { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(24vmin, 240px); z-index: 0;
-    opacity: 0.16; pointer-events: none; user-select: none; filter: drop-shadow(0 0 1.5px rgba(0, 0, 0, 0.55)); }
+  /* ZephyrSai logo: always in the top-right corner (stays when the menus are hidden and in photo mode) */
+  #logo { position: fixed; top: 14px; right: 14px; z-index: 35; height: 70px; padding: 6px 12px; box-sizing: border-box;
+    background: var(--panel); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--line);
+    border-radius: 12px; pointer-events: none; user-select: none; }
+  #logo img { display: block; height: 100%; width: auto; }
   .panel { position: fixed; background: var(--panel); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--line); border-radius: var(--radius); }
   #brand { top: 14px; left: 14px; padding: 10px 14px; }
@@ -34,7 +36,7 @@
   #modes { display: flex; gap: 4px; padding: 4px; }
   #modes button { flex: 1; text-align: center; border: 1px solid var(--line); }
   #minimap { bottom: 14px; left: 14px; width: 260px; height: 200px; padding: 0; overflow: hidden; cursor: crosshair; }
-  #right { top: 14px; right: 14px; width: 300px; max-height: calc(100vh - 28px); overflow: auto; padding: 8px 10px 12px; }
+  #right { top: 92px; right: 14px; width: 300px; max-height: calc(100vh - 106px); overflow: auto; padding: 8px 10px 12px; }   /* under the logo */
   .tabs { display: flex; gap: 4px; margin-bottom: 6px; }
   .tabs button { flex: 1; text-align: center; border: 1px solid var(--line); }
   .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 5px 6px; border-radius: 8px; }
@@ -115,8 +117,9 @@
     #tour { width: auto; min-width: 0; left: 14px; right: 14px; transform: none; bottom: 150px; }
     #tourDots { display: none; }
     #right { width: auto; left: 14px; top: auto; bottom: 150px; max-height: 40vh; }
-    #brand { right: 14px; }
-    #viewbar { top: 76px; left: auto; right: 14px; transform: none; }
+    #brand { right: 96px; }
+    #logo { height: 62px; }
+    #viewbar { top: 84px; left: auto; right: 14px; transform: none; }
   }
 </style>
 <script type="importmap">
@@ -131,11 +134,11 @@
 </head>
 <body data-mode="walk">
 <div id="stage"></div>
-<img id="watermark" src="assets/web/brand/zephyrsai.png" alt="" aria-hidden="true" draggable="false">
-<div id="loading">Building Mykonos from the CAD drawings…</div>
+<div id="logo"><img src="assets/web/brand/zephyrsai.png" alt="ZephyrSai" draggable="false"></div>
+<div id="loading">Building Skybrew from the CAD drawings…</div>
 <div id="crosshair"></div>
 
-<div id="brand" class="panel"><b>Mykonos · Le Méridien Abu Dhabi</b><small>Digital twin · base build from site CAD (true scale)</small></div>
+<div id="brand" class="panel"><b>Skybrew · Le Méridien Abu Dhabi</b><small>Digital twin · base build from site CAD (true scale)</small></div>
 <div id="viewbar"><div id="themeSeg" title="Interior theme"></div><button id="fsBtn" title="Fill the whole screen (Esc to leave)">⛶ Full screen</button><button id="uiBtn" title="Hide every panel for a clean view (H)">◱ Hide menus</button></div>
 
 <div id="left" class="panel">

@@ -601,7 +601,7 @@ elements.apply(elements.defaults);
 // ---- profiles: the whole look (profiles.js) — browser storage, disk, share link
 function capture(name, withCamera = $('#profCam').checked) {
   return {
-    app: 'mykonos-twin', v: Profiles.PROFILE_VERSION, name: name || 'Autosave', saved: new Date().toISOString(),
+    app: 'skybrew-twin', v: Profiles.PROFILE_VERSION, name: name || 'Autosave', saved: new Date().toISOString(),
     theme: themes ? themes.id : 'free', schemes: themes ? themes.allSchemes() : { free: currentScheme() }, glass: elements.overrides(),
     view: { time: +timeOfDay.toFixed(2), sky: skyMode, clouds: clouds.preset, quality: userQuality, doorsClosed: $('#t_doors').checked,
       colour: colourMode, people: crowd.mode, crowd: crowd.level, club: club.mode },
@@ -708,7 +708,7 @@ function cycleFinish(id) {
 function screenshot() {
   if (!photo.active) post.render(0);
   const a = document.createElement('a'); a.href = renderer.domElement.toDataURL('image/png');
-  a.download = `mykonos-${new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-')}.png`; a.click();
+  a.download = `skybrew-${new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-')}.png`; a.click();
 }
 
 // ------------------------------------------------------------------ start + loop

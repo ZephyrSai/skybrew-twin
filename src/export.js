@@ -13,8 +13,8 @@ export async function exportGLB(root, { skip, onStatus } = {}) {
     const glb = await exporter.parseAsync(root, { binary: true, onlyVisible: true, maxTextureSize: 1024, includeCustomExtensions: false });
     const blob = new Blob([glb], { type: 'model/gltf-binary' });
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-    a.download = 'mykonos-twin.glb'; a.click();
-    onStatus?.(`Exported mykonos-twin.glb (${(blob.size / 1e6).toFixed(1)} MB)`);
+    a.download = 'skybrew-twin.glb'; a.click();
+    onStatus?.(`Exported skybrew-twin.glb (${(blob.size / 1e6).toFixed(1)} MB)`);
   } finally {
     for (const o of hidden) o.visible = true;
   }

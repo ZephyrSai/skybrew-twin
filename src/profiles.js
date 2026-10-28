@@ -22,7 +22,7 @@ export function loadAutosave() { return store.get(CUR); }
 export function storageAvailable() { try { localStorage.setItem('skybrew.t', '1'); localStorage.removeItem('skybrew.t'); return true; } catch { return false; } }
 
 export function validate(p) {
-  if (!p || typeof p !== 'object' || p.app !== 'mykonos-twin') throw new Error('Not a Mykonos twin profile');
+  if (!p || typeof p !== 'object' || !['skybrew-twin', 'mykonos-twin'].includes(p.app)) throw new Error('Not a Skybrew twin profile');   // mykonos-twin: saved before the rename
   if ((p.v || 1) > PROFILE_VERSION) throw new Error(`Profile was saved by a newer version (v${p.v})`);
   return p;
 }
